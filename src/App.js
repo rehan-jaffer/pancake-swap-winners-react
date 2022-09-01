@@ -18,64 +18,6 @@ const END_DATE = "2022-09-06";
 const WIDGET_EVENT = "WidgetSwapped"
 
 const WIDGET_ABI_JSON = [{ "inputs": [{ "internalType": "address", "name": "_stargateRouter", "type": "address" }, { "internalType": "address", "name": "_stargateRouterETH", "type": "address" }, { "internalType": "address", "name": "_stargateFactory", "type": "address" }], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "bytes2", "name": "partnerId", "type": "bytes2" }], "name": "PartnerSwap", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "bytes2", "name": "partnerId", "type": "bytes2" }, { "indexed": false, "internalType": "uint256", "name": "tenthBps", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "widgetFee", "type": "uint256" }], "name": "WidgetSwapped", "type": "event" }, { "inputs": [], "name": "MAX_UINT", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "TENTH_BPS_DENOMINATOR", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "bytes2", "name": "_partnerId", "type": "bytes2" }], "name": "partnerSwap", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "stargateFactory", "outputs": [{ "internalType": "contract IStargateFactory", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "stargateRouter", "outputs": [{ "internalType": "contract IStargateRouter", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "stargateRouterETH", "outputs": [{ "internalType": "contract IStargateRouterETH", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint16", "name": "_dstChainId", "type": "uint16" }, { "internalType": "uint256", "name": "_amountLD", "type": "uint256" }, { "internalType": "uint256", "name": "_minAmountLD", "type": "uint256" }, { "internalType": "bytes", "name": "_to", "type": "bytes" }, { "internalType": "bytes2", "name": "_partnerId", "type": "bytes2" }, { "components": [{ "internalType": "uint256", "name": "tenthBps", "type": "uint256" }, { "internalType": "address", "name": "feeCollector", "type": "address" }], "internalType": "struct IStargateWidget.FeeObj", "name": "_feeObj", "type": "tuple" }], "name": "swapETH", "outputs": [], "stateMutability": "payable", "type": "function" }, { "inputs": [{ "internalType": "uint16", "name": "_dstChainId", "type": "uint16" }, { "internalType": "uint16", "name": "_srcPoolId", "type": "uint16" }, { "internalType": "uint16", "name": "_dstPoolId", "type": "uint16" }, { "internalType": "uint256", "name": "_amountLD", "type": "uint256" }, { "internalType": "uint256", "name": "_minAmountLD", "type": "uint256" }, { "components": [{ "internalType": "uint256", "name": "dstGasForCall", "type": "uint256" }, { "internalType": "uint256", "name": "dstNativeAmount", "type": "uint256" }, { "internalType": "bytes", "name": "dstNativeAddr", "type": "bytes" }], "internalType": "struct IStargateRouter.lzTxObj", "name": "_lzTxParams", "type": "tuple" }, { "internalType": "bytes", "name": "_to", "type": "bytes" }, { "internalType": "bytes2", "name": "_partnerId", "type": "bytes2" }, { "components": [{ "internalType": "uint256", "name": "tenthBps", "type": "uint256" }, { "internalType": "address", "name": "feeCollector", "type": "address" }], "internalType": "struct IStargateWidget.FeeObj", "name": "_feeObj", "type": "tuple" }], "name": "swapTokens", "outputs": [], "stateMutability": "payable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "tokenApproved", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }];
-/*
-const sanityCheckOutput = (accounts) => {
-
-  const numberOfChains = Object.keys(accounts).length;
-
-  console.log("[*] Running sanity check")
-  console.log(`${numberOfChains} chains..`)
-  Object.keys(accounts).forEach((key) => {
-    console.log(`* Found ${accounts[key].length} transfers from ${key}...`)
-  });
-
-  Object.keys(accounts).forEach((chain) => {
-    accounts[chain].forEach((account) => {
-      console.log(`[${chain}] ${account[2]} ACCOUNT: ${account[0]} TX: ${account[1]}`)
-    });
-  });
-}
-
-const selectRandomAccounts = (accountsArray) => {
-
-  // randomizer, sort Array in a totally random order and return first 100 addresses
-  const shuffled = accountsArray.sort((a, b) => 0.5 - Math.random()).slice(0, 100);
-  console.log("Listing 100 random accounts..")
-
-  shuffled.forEach((shuffle) => {
-    console.log(shuffle)
-  });
-}
-
-const collateData = (events) => {
-
-  const accounts = {}
-  const accountsArray = []
-
-  events.forEach((e) => {
-    e.forEach((e2) => {
-      if (!(e2.chain in accounts)) {
-        accounts[e2.chain] = [];
-      }
-      accounts[e2.chain].push([e2.from, e2.hash, e2.ts.format('DD/MM/YYYY')])
-      accountsArray.push(e2.from)
-    })
-  });
-
-  return [accounts, accountsArray];
-}
-
-try {
-  const events = await Promise.all(allEvents);
-
-  let [accounts, accountsArray] = collateData(events);
-  sanityCheckOutput(accounts)
-  selectRandomAccounts(accountsArray)
-
-} catch (e) {
-  process.exit() // exit if any of the chain RPCs have issues
-  // console.log(e)
-}*/
 
 const explorerURLs = {
   "Ethereum": "https://etherscan.io/tx/",
