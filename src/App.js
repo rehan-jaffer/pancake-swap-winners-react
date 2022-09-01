@@ -77,8 +77,18 @@ try {
   // console.log(e)
 }*/
 
+const explorerURLs = {
+  "Ethereum": "https://etherscan.io/tx/",
+  "Polygon": "https://polygonscan.com/tx/",
+  "Optimism": "https://optimistic.etherscan.io/tx/",
+  "Fantom": "https://ftmscan.com/tx/",
+  "Avalanche": "https://avascan.info/blockchain/c/tx/",
+  "BNB Chain": "https://bscscan.com/tx/",
+  "Arbitrum": "https://arbiscan.io/tx/"
+}
+
 const endpoints = {
-  "Polygon": { address: "0xdc2716B92480225533aBC3328C2Ab961f2A9247d", rpc: "https://rpc.ankr.com/polygon" },
+  "Polygon": { address: "0xdc2716B92480225533aBC3328C2Ab961f2A9247d", rpc: "https://rpc.ankr.com/polygon/" },
   "Arbitrum": { address: "0x6c33A7b29C8B012D060F3a5046f3ee5aC48f4780", rpc: "https://arbitrum-mainnet.infura.io/v3/79b705a25830477b82fe9d8c8eb1f252" },
   "Optimism": { address: "0x46Bc16F76B0aE14Abb820D3410843Ba54D8ef6f0", rpc: "https://optimism-mainnet.infura.io/v3/79b705a25830477b82fe9d8c8eb1f252" },
   "Fantom": { address: "0xC8e5157EC44E00ff85Bf15D4f50974d3A8166427", rpc: "https://rpc.ftm.tools/" },
@@ -141,7 +151,8 @@ function App() {
 
       Object.keys(accounts).forEach((chain) => {
         accounts[chain].forEach((account) => {
-          logToScreen(`[${chain}] ${account[2]} ACCOUNT: ${account[0]} TX: ${account[1]}`)
+          let link = (chain in explorerURLs) ? `<a class="tx-link" href ='${explorerURLs[chain] + account[1]}'>${account[1]}</a>` : account[1];
+          logToScreen(`[${chain}] ${account[2]} ACCOUNT: ${account[0]} TX: ${link}`)
         });
       });
     }
@@ -210,7 +221,7 @@ function App() {
       <div className="console col-5">
         <strong>Debugger: </strong>
           <ul className="console-lines">
-            {consoleText.map((line) => (<li className="console-line">{line}</li>))}
+            {consoleText.map((line) => (<li className="console-line"><div dangerouslySetInnerHTML={{__html: line}} /></li>))}
           </ul>
         </div>
         <div className="col-4 winners-container">
