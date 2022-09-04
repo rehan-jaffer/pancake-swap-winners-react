@@ -114,7 +114,7 @@ function App() {
 
         const currentBlock = await web3.eth.getBlockNumber();
 
-        const fromBlock = (endpoints[endpoint_key].fromZero) !== false ? { fromBlock: 0x0 } : { fromBlock: currentBlock - 300000 };
+        const fromBlock = (endpoints[endpoint_key].fromZero) !== false ? { fromBlock: 0x0 } : { fromBlock: currentBlock - 1000000 };
         const events = await contract.getPastEvents(WIDGET_EVENT, fromBlock)
         logToScreen(`[${endpoint_key}] Querying widget contract ${endpoints[endpoint_key].address}...`)
 
