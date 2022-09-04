@@ -30,12 +30,12 @@ const explorerURLs = {
 }
 
 const endpoints = {
-  "Polygon": { address: "0xdc2716B92480225533aBC3328C2Ab961f2A9247d", rpc: "https://rpc.ankr.com/polygon/f46966197a455369c256a16d025fcef3f432951cca2a604dee244ffe0f9c40a9" },
+  "Polygon": { address: "0xdc2716B92480225533aBC3328C2Ab961f2A9247d", rpc: "https://rpc.ankr.com/polygon/f46966197a455369c256a16d025fcef3f432951cca2a604dee244ffe0f9c40a9", fromZero: false },
   "Arbitrum": { address: "0x6c33A7b29C8B012D060F3a5046f3ee5aC48f4780", rpc: "https://arbitrum-mainnet.infura.io/v3/79b705a25830477b82fe9d8c8eb1f252" },
-  "Optimism": { address: "0x46Bc16F76B0aE14Abb820D3410843Ba54D8ef6f0", rpc: "https://optimism-mainnet.infura.io/v3/79b705a25830477b82fe9d8c8eb1f252" },
+  "Optimism": { address: "0x46Bc16F76B0aE14Abb820D3410843Ba54D8ef6f0", rpc: "https://rpc.ankr.com/optimism/f46966197a455369c256a16d025fcef3f432951cca2a604dee244ffe0f9c40a9" },
   "Fantom": { address: "0xC8e5157EC44E00ff85Bf15D4f50974d3A8166427", rpc: "https://rpc.ftm.tools/" },
   "Ethereum": { address: "0x76d4d68966728894961AA3DDC1d5B0e45668a5A6", rpc: "https://mainnet.infura.io/v3/79b705a25830477b82fe9d8c8eb1f252" },
-  "BNB Chain": { address: "0x2Eb9ea9dF49BeBB97e7750f231A32129a89b82ee", rpc: "https://rpc.ankr.com/bsc/f46966197a455369c256a16d025fcef3f432951cca2a604dee244ffe0f9c40a9" },
+  "BNB Chain": { address: "0x2Eb9ea9dF49BeBB97e7750f231A32129a89b82ee", rpc: "https://rpc.ankr.com/bsc/f46966197a455369c256a16d025fcef3f432951cca2a604dee244ffe0f9c40a9", fromZero: false },
   "Avalanche": { address: "0x20293eDD4f52F81234b3997B9AE4742c48005858", rpc: "https://rpc.ankr.com/avalanche" }
 }
 
@@ -114,7 +114,8 @@ function App() {
 
         const currentBlock = await web3.eth.getBlockNumber();
 
-        const events = await contract.getPastEvents(WIDGET_EVENT, { fromBlock: currentBlock - 300000 })
+        const fromBlock = (endpoints[endpoint_key].fromZero) !== false ? { fromBlock: 0x0 } : { fromBlock: currentBlock - 300000 };
+        const events = await contract.getPastEvents(WIDGET_EVENT, fromBlock)
         logToScreen(`[${endpoint_key}] Querying widget contract ${endpoints[endpoint_key].address}...`)
 
         setChains((chains) => { return { ...chains, [endpoint_key]: "Connected!" } })
