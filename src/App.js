@@ -7,8 +7,14 @@ import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween.js'
 import "./bootstrap.min.css";
 import "./styles.css"
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
 
+dayjs.extend(timezone)
+dayjs.extend(utc)
 dayjs.extend(isBetween)
+
+dayjs.tz.setDefault("UTC")
 
 const PARTNER_ID = "0x0002000000000000000000000000000000000000000000000000000000000000"
 
@@ -137,12 +143,12 @@ function App() {
           tx.chain = endpoint_key; // save the chain this is from, some chains don't include chainId
 
           const block = await web3.eth.getBlock(tx.blockHash);
-          const ts = dayjs.unix(block.timestamp);
+          const ts = dayjs.unix(block.timestamp).utc();
           tx.ts = ts;
 
           // 3rd param [) means inclusive of start date but not end date
 
-          return (ts.isBetween(START_DATE, END_DATE, 'day', "[)") === true) ? tx : null
+          return (ts.utc().isBetween(START_DATE, END_DATE, 'day', "[)") === true) ? tx : null
         }));
 
         return results.filter((res) => res !== null);
